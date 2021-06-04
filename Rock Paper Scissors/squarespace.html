@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Asap:400,500,700');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Asap, sans-serif;
+}
+
+/* body{
+    background-color: #292C34;
+} */
+
+header{
+    background: white;
+    padding: 20px;
+}
+header > h1{
+    text-align: center;
+    color: #292C34;
+}
+
+.section{
+    text-align: center;
+    /* display: flex; */
+    /* justify-content: space-around; */
+    max-width: 800px;
+    margin: auto;
+    display: grid;  
+    grid-gap: 5px;  
+    grid-template-columns: repeat(auto-fit, 150px);
+    grid-template-rows: repeat(2, 150px);
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
+button{
+    margin: 30px auto;
+    border-radius: 4px;
+    text-align: center;
+    width: 100px;
+    color: #292C34;
+    padding: 5px 10px;
+    display: block;
+    background-color: hsl(10, 36%, 66%);
+    border: 3px solid white;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px #1f2127;
+}
+
+button:hover{
+    background-color: hsla(10, 36%, 66%, 0.733);
+    cursor: pointer;
+}
+
+button:active{
+    box-shadow: 0 3px 2px #131418;
+    background-color: hsla(10, 36%, 66%, 0.733);
+    transform: translateY(2px);
+}
+
+.choice{
+    border: 4px solid hsl(10, 36%, 66%);
+    border-radius: 50%;
+    padding: 25px;
+    /* width: 200px; */
+    /* margin: 0 20px; */
+    transition: all 0.3s ease;
+    color: #292C34;
+}
+
+.choice:hover{
+    cursor: pointer;
+    background: hsla(10, 36%, 66%, 0.733);
+}
+
+#result{
+    text-align: center;
+    color: #292C34;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.scoreboard{
+    margin: 20px auto;
+    border: 3px solid hsl(10, 36%, 66%);
+    border-radius: 4px;
+    text-align: center;
+    width: 200px;
+    color: #292C34;
+    font-size: 46px;
+    padding: 15px 20px;
+    position: relative;
+}
+
+.badge{
+    background: hsl(10, 36%, 66%);
+    color: #292C34;
+    font-size: 14px;
+    padding: 2px 10px;
+}
+
+#user-lable{
+    position: absolute;
+    top: 30px;
+    left: -25px;
+}
+
+#comp-lable{
+    position: absolute;
+    top: 30px;
+    right: -30px;
+}
+
+.winner{
+    border: 4px solid #4dcc7d;
+    box-shadow: 0 0 10 px #31b43a;
+    background: #4dcc7e6c;
+}
+
+.loser{
+    border: 4px solid #fc121b;
+    box-shadow: 0 0 10 px #d01115;
+    background: #fc121a79;
+}
+
+.draw{
+    border: 4px solid #464647;
+    box-shadow: 0 0 10 px #25292b;
+    background: #46464786;
+}
+</style>
+<body>
+    <header>
+        <h1>Rock Paper Scissors Lizard Spock</h1>
+    </header>
+    <div class = "scoreboard">
+        <div id="user-lable" class="badge">user</div>
+        <div id="comp-lable" class="badge">comp</div>
+        <span id="user-score">0</span>:<span id="comp-score">0</span>
+    </div>
+    <h4 id="result">Make your move</h4>
+    <div class = "section">
+        <div class ="choice" id = "rock"> 
+            <i class="fas fa-hand-rock fa-5x" alt = "rock"></i>
+        </div>
+        <div class ="choice" id = "paper">
+            <i class="fas fa-hand-paper fa-5x" alt = "paper"></i>                        
+        </div>
+        <div class ="choice" id = "scissors">
+            <i class="fas fa-hand-scissors fa-5x" alt = "scissors"></i>
+        </div>
+        <div class ="choice" id = "lizard">
+            <i class="fas fa-hand-lizard fa-5x" alt = "lizard"></i>
+        </div>
+        <div class ="choice" id = "spock">
+            <i class="fas fa-hand-spock fa-5x" alt = "spock"></i>
+        </div>
+    </div>
+    <div class = "button">
+        <button id="start-over">Start Over</button>
+    </div>
+    <script defer src="index.js">
+        // document.querySelector("startOver").addEventListener("click", Restart);
+
+let userChoice;
+let userScore = 0;
+let compScore = 0;
+const rock = document.getElementById("rock");
+const paper = document.getElementById("paper");
+const scissors = document.getElementById("scissors");
+const lizard = document.getElementById("lizard");
+const spock = document.getElementById("spock");
+
+
+const userScore_span = document.getElementById("user-score");
+const compScore_span = document.getElementById("comp-score");
+const choices = {
+    0: "rock",
+    1: "paper",
+    2: "scissors",
+    3: "lizard",
+    4: "spock"
+}
+
+function getCompChoice(){
+    let choice = Math.floor(Math.random()*5);
+    return choices[choice];
+}
+
+
+function main(){
+
+    rock.addEventListener('click', function(){
+        userChoice = "rock";
+        game(userChoice, getCompChoice());
+        });
+    paper.addEventListener('click', function(){
+        userChoice = "paper";
+        game(userChoice, getCompChoice());
+        });
+    scissors.addEventListener('click', function(){
+        userChoice = "scissors";
+        game(userChoice, getCompChoice());
+        });
+    lizard.addEventListener('click', function(){
+        userChoice = "lizard";
+        game(userChoice, getCompChoice());
+        });
+    spock.addEventListener('click', function(){
+        userChoice = "spock";
+        game(userChoice, getCompChoice());    
+    });
+
+}
+
+const startOver = document.getElementById("start-over");
+startOver.addEventListener('click', function(){
+    //  window.location.reload();
+    userScore = 0;
+    compScore = 0;
+    userScore_span.innerHTML = userScore;
+    compScore_span.innerHTML = compScore;
+    document.getElementById('result').innerHTML = "Make your move";
+    return userScore, compScore;
+});
+
+function game(userChoice, compChoice){
+    
+    console.log(compScore);
+    console.log(userScore);
+
+    let userSelection = String(userChoice);
+    let compSelection = String(compChoice);
+    
+    function win(userChoice, compChoice) {
+        userScore++;
+        userScore_span.innerHTML = userScore;
+        compScore_span.innerHTML = compScore;
+        document.getElementById(userSelection).classList.add("winner");
+        document.getElementById(compSelection).classList.add("loser");
+        setTimeout(() => document.getElementById(userSelection).classList.remove("winner"), 800);
+        setTimeout(() => document.getElementById(compSelection).classList.remove("loser"), 800);
+    }
+    
+    function lose(userChoice, compChoice) {
+        compScore++;
+        userScore_span.innerHTML = userScore;
+        compScore_span.innerHTML = compScore;
+        document.getElementById(userSelection).classList.add("loser");
+        document.getElementById(compSelection).classList.add("winner");
+        setTimeout(() => document.getElementById(userSelection).classList.remove("loser"), 800);
+        setTimeout(() => document.getElementById(compSelection).classList.remove("winner"), 800);
+    }
+    
+    function draw(userChoice, compChoice) {
+        userScore_span.innerHTML = userScore;
+        compScore_span.innerHTML = compScore;
+        document.getElementById(userSelection).classList.add("draw");
+        document.getElementById(compSelection).classList.add("draw");
+        setTimeout(() => document.getElementById(userSelection).classList.remove("draw"), 800);
+        setTimeout(() => document.getElementById(compSelection).classList.remove("draw"), 800);
+    }
+
+        //scissors cuts paper
+    if (compSelection == "scissors" && userChoice == "paper"){
+            document.getElementById('result').innerHTML = "Scissors cuts paper. You lose!";
+            lose();
+        } else if (compChoice == "paper" && userChoice == "scissors"){
+            document.getElementById('result').innerHTML = "Scissors cuts paper. You win!";
+            win();
+        //paper covers rock
+        } else if (compChoice == "paper" && userChoice == "rock"){
+            document.getElementById('result').innerHTML = "Paper covers rock. You lose!";
+            lose();
+        } else if(compChoice == "rock" && userChoice == "paper"){
+            document.getElementById('result').innerHTML = "Paper covers rock. You win!";
+            win();
+        //rock crushes lizard
+        } else if (compChoice == "rock" && userChoice == "lizard"){
+            document.getElementById('result').innerHTML = "Rock crushes lizard. You lose!";
+            lose();
+        } else if (compChoice == "lizard" && userChoice == "rock"){
+            document.getElementById('result').innerHTML = "Rock crushes lizard. You win!";
+            win();
+        //lizard poisons spock
+        } else if (compChoice == "lizard" && userChoice == "spock"){
+            document.getElementById('result').innerHTML = "Lizard poisons Spock. You lose!";
+            lose();
+        } else if (compChoice == "spock" && userChoice == "lizard"){
+            document.getElementById('result').innerHTML = "Lizard poisons Spock. You win!";
+            win();
+        //spock smashes scissors
+        } else if (compChoice == "scissors" && userChoice == "spock"){
+            document.getElementById('result').innerHTML = "Spock smashes scissors. You lose!";
+            lose();
+        } else if (compChoice == "scissors" && userChoice == "spock"){
+            document.getElementById('result').innerHTML = "Spock smashes scissors. You win!";
+            win();
+        //scissors decapitates lizard
+        } else if (compChoice == "scissors" && userChoice == "lizard"){
+            document.getElementById('result').innerHTML = "Scissors decapitates lizard. You lose!";
+            lose();
+        } else if (compChoice == "lizard" && userChoice == "scissors"){
+            document.getElementById('result').innerHTML = "Scissors decapitates lizard. You win!";
+            win();
+        //lizard eats paper
+        } else if (compChoice == "lizard" && userChoice == "paper"){
+            document.getElementById('result').innerHTML = "Lizard eats paper. You lose!";
+            lose();
+        } else if (compChoice == "paper" && userChoice == "lizard"){
+            document.getElementById('result').innerHTML = "Lizard eats paper. You win!";
+            win();
+        //paper disproves spock
+        } else if (compChoice == "paper" && userChoice == "spock"){
+            document.getElementById('result').innerHTML = "Paper disproves Spock. You lose!";
+            lose();
+        } else if (compChoice == "spock" && userChoice == "paper"){
+            document.getElementById('result').innerHTML = "Paper disproves Spock. You win!";
+            win();
+        //spock vaporizes rock
+        } else if (compChoice == "spock" && userChoice == "rock"){
+            document.getElementById('result').innerHTML = "Spock vaporizes rock. You lose!";
+            lose();
+        } else if (compChoice == "rock" && userChoice == "spock"){
+            document.getElementById('result').innerHTML = "Spock vaporizes rock. You win!";
+            win();
+        //rock crushes scissors
+        } else if (compChoice == "rock" && userChoice == "scissors"){
+            document.getElementById('result').innerHTML = "Rock crushes scissors. You lose!";
+            lose();
+        } else if (compChoice == "scissors" && userChoice == "rock"){
+            document.getElementById('result').innerHTML = "Rock crushes scissors. You win!";
+            win();
+        //draw
+        } else {
+            document.getElementById('result').innerHTML = "Draw";
+            draw();
+        };
+}
+
+
+main();
+
+
+
+    </script>
+    <script src="https://kit.fontawesome.com/a4669f65fc.js" crossorigin="anonymous"></script>
+</body>
+</html>
