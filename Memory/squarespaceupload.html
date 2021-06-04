@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Asap:400,500,700');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Asap, sans-serif;
+}
+
+header{
+    background: white;
+    padding: 20px;
+}
+header > h1{
+    text-align: center;
+    color: #292C34;
+}
+
+.grid{
+    text-align: center;
+    max-width: 700px;
+    margin: auto;
+    display: grid;  
+    grid-gap: 5px;  
+    grid-template-columns: repeat(auto-fit, 100px);
+    grid-template-rows: repeat(3, 150px);
+    justify-content: space-evenly;
+    justify-items: center;
+    align-content: space-evenly;
+    align-items: center;
+}
+
+#result{
+    text-align: center;
+    color: #292C34;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.scoreboard{
+    margin: 20px auto;
+    border: 3px solid hsl(10, 36%, 66%);
+    border-radius: 4px;
+    text-align: center;
+    width: 200px;
+    color: #292C34;
+    font-size: 46px;
+    padding: 15px 20px;
+    position: relative;
+}
+
+.badge{
+    background: hsl(10, 36%, 66%);
+    color: #292C34;
+    font-size: 14px;
+    padding: 2px 10px;
+}
+
+#user-lable{
+    position: absolute;
+    top: 30px;
+    left: -35px;
+}
+
+#comp-lable{
+    position: absolute;
+    top: 30px;
+    right: -30px;
+}
+
+
+
+button{
+    margin: 30px auto;
+    border-radius: 4px;
+    text-align: center;
+    width: 100px;
+    color: #292C34;
+    padding: 5px 10px;
+    display: block;
+    background-color: hsl(10, 36%, 66%);
+    border: 3px solid white;
+    border-radius: 4px;
+    box-shadow: 0 3px 5px #1f2127;
+}
+
+button:hover{
+    background-color: hsla(10, 36%, 66%, 0.733);
+    cursor: pointer;
+}
+
+button:active{
+    box-shadow: 0 3px 2px #131418;
+    background-color: hsla(10, 36%, 66%, 0.733);
+    transform: translateY(2px);
+}
+
+.choice{
+    border: 4px solid hsl(10, 36%, 66%);
+    border-radius: 50%;
+    padding: 25px;
+    /* width: 100px; */
+    /* margin: 0 20px; */
+    transition: all 0.3s ease;
+    color: #292C34;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Memory Game</h1>
+    </header>
+    <div class = "scoreboard">
+        <div id="user-lable" class="badge">matched</div>
+        <div id="comp-lable" class="badge">clashed</div>
+        <span id="wins">0</span>:<span id="loses">0</span>
+    </div>
+    <h4 id="result">Make your move</h4>
+    <div class="grid">
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "0"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "1"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "2"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "3"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "4"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "5"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "6"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "7"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "8"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "9"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "10"></i>
+        </div>
+        <div class = "choice">
+            <i class = "fas fa-question fa-3x" id = "11"></i>
+        </div>
+
+    </div>
+    <div class = "button">
+        <button id="start-over">Start Over</button>
+</body>
+<script src="https://kit.fontawesome.com/a4669f65fc.js" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+//card options
+const cardArray = [
+    {
+        name: 'art',
+        i: 'fas fa-paint-brush fa-3x',
+        id: 0
+    },
+    {
+        name: 'book',
+        i: 'fas fa-book fa-3x',
+        id: 1
+    },        
+    {
+        name: 'camera',
+        i: 'fas fa-camera-retro fa-3x',
+        id: 2
+    },        
+    {
+        name: 'dnd',
+        i: 'fas fa-dice-d20 fa-3x',
+        id: 3
+    },        
+    {
+        name: 'language',
+        i: 'far fa-comments fa-3x',
+        id: 4
+    },        
+    {
+        name: 'travel',
+        i: 'fas fa-plane fa-3x',
+        id: 5
+    },
+    {
+        name: 'art',
+        i: 'fas fa-paint-brush fa-3x',
+        id: 0
+    },
+    {
+        name: 'book',
+        i: 'fas fa-book fa-3x',
+        id: 1
+    },        
+    {
+        name: 'camera',
+        i: 'fas fa-camera-retro fa-3x',
+        id: 2
+    },        
+    {
+        name: 'dnd',
+        i: 'fas fa-dice-d20 fa-3x',
+        id: 3
+    },        
+    {
+        name: 'language',
+        i: 'far fa-comments fa-3x',
+        id: 4
+    },        
+    {
+        name: 'travel',
+        i: 'fas fa-plane fa-3x',
+        id: 5
+    }
+];
+
+    //start over
+    const startOver = document.getElementById("start-over");
+    startOver.addEventListener('click', function(){
+        window.location.reload();
+    });
+    console.log(startOver);
+
+cardArray.sort(() => 0.5 - Math.random());
+
+const choices = document.querySelectorAll('.choice');
+const count = choices.length;
+
+const resultDisplay = document.querySelector('#wins');
+const lossDisplay = document.querySelector('#loses');
+var cardsChosen = [];
+var cardsChosenId = [];
+var cardsWon = [];
+var cardsLost = [];
+
+//flipcard
+
+for (let i=0; i < count; i++){
+    choices[i].onclick = function(){
+        var card = this.querySelector('svg');
+        console.log(card);
+        var cardID = card.id;
+        console.log(cardID);
+        
+        card.setAttribute('class', cardArray[cardID].i);
+        cardsChosen.push(cardID);
+        cardsChosenId.push(cardArray[cardID].id);
+
+        if (cardsChosen.length === 2){
+            setTimeout(checkForMatch, 500);
+
+
+        };
+    };
+};
+
+
+//check for matches
+function checkForMatch (){
+    var cards = document.querySelectorAll('svg');
+    const optionOneId = cardsChosen[0];
+    const optionTwoId = cardsChosen[1];
+    if (cardsChosenId[0] === cardsChosenId[1]) {
+        document.getElementById('result').innerHTML = 'You found a match';
+        cardsWon.push(cardsChosen);
+        setTimeout(cards[optionOneId].setAttribute('class', 'fas fa-check fa-3x'), 500);
+        setTimeout(cards[optionTwoId].setAttribute('class', 'fas fa-check fa-3x'), 500);
+    } else {
+        document.getElementById('result').innerHTML = 'Sorry, try again';
+        cardsLost.push(cardsChosen);
+        setTimeout(cards[optionOneId].setAttribute('class', 'fas fa-question fa-3x'), 500);
+        setTimeout(cards[optionTwoId].setAttribute('class', 'fas fa-question fa-3x'), 500);
+    };
+    cardsChosen = [];
+    cardsChosenId = [];
+    resultDisplay.textContent = cardsWon.length;
+    lossDisplay.textContent = cardsLost.length;
+    if (cardsWon.length === cardArray.length/2){
+        document.getElementById('result').innerHTML = 'Congratulations! You fond them all!';
+    };
+};
+});
+
+</script>
+</html>
